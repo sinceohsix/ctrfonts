@@ -1,0 +1,61 @@
+CTR Font Converter Console - Version 1.2.2
+Usage:
+  ctr_FontConverterConsole -i <in_fmt> <in_opt> -o <out_fmt> <out_opt> [-f <filt
+er>]
+
+ -i <in_fmt>              <in_fmt> is one of the following: image, bcfnt, win
+ -o <out_fmt>             <out_fmt> is one of the following: image, bcfnt
+ -f <filter>              Character filter
+
+The <in_opt> argument depends what is specified for <in_fmt>.
+ -i When specifying the "image" option:
+   -if <image>            Image file
+   -io <order>            Character order file
+   -ic <format>           Texture format: <format> is one of the following:
+                          A4, A8, LA4, LA8, RGB565, RGB5A1, RGBA4, RGB8, RGBA8
+   -ia                    Fix linear interpolation errors
+
+ -i When specifying the "bcfnt" option:
+   -if <bcfnt>            bcfnt file
+
+ -i When specifying the "win" option:
+   -in <name>             Font name
+   -is <size>             Font size
+   -isw <width>           Average width
+   -ic <format>           Texture format: <format> is one of the following:
+                          A1, A4, A6, LA1, LA4, LA6
+   -ia                    Use soft antialiasing
+   -it <type=char>        Glyph width type: <type> is one of the following:
+                          glyph, keepsp, char, fixed
+   -iw <width>            Glyph width (if the glyph width type is "fixed")
+
+The <out_opt> argument depends what is specified for <out_fmt>.
+ -o When specifying the "image" option:
+   -of <image>            Image file
+   -oo <order>            Character order file
+   -oi <format=ext>       Output image format: <format> is one of the following:
+                          bmp, tga, ext
+   -og                    Don't draw grid
+   -ow <width>            Cell width
+   -oh <height>           Cell height
+   -ot <top=0>            Cell top margin width
+   -ob <bottom=top>       Cell bottom margin width
+   -ol <left=0>           Cell left margin width
+   -or <right=left>       Cell right margin width
+   -ocg <color=000000>    Grid color
+   -ocm <color=99AA99>    Margin color
+   -ocw <color=FF0000>    Width line color
+   -ocn <color=FF7F7F>    <null/> cell color
+
+ -o When specifying the "bcfnt" option:
+   -of <bcfnt>            bcfnt file
+   -oe <encoding=uincode>   Supported Character code: <encoding> is one of the f
+ollowing:
+                          sjis, uincode, cp1252
+   -op <glyphgroup>       Glyph group (.xggp) file
+   -os <sheetsize>        Sheet size (in kilopixels)
+   -oa <char code>        Alternate character
+   -oh <linefeed>         Linefeed
+   -ol <left>             Default left space
+   -ow <width>            Default glyph width
+   -or <left>             Default right space

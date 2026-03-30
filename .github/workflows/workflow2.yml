@@ -60,13 +60,32 @@ jobs:
             mergefonts/custom_font.ttf \
             mergefonts/nintendo_NTLG-DB_001.ttf \
             mergefonts/merged_font.ttf
+            
+      - name: Get font name
+        shell: pwsh
+        run: |
+          pip install fonttools --quiet
+          $fontName = python3 -c "from fontTools.ttLib import TTFont; tt = TTFont('mergefonts/merged_font.ttf'); print(tt['name'].getDebugName(4))"
+          echo "FONT_NAME=$fontName" >> $env:GITHUB_ENV
+          
+      - name: Install merged font to Windows
+        shell: pwsh
+        run: |
+          Copy-Item mergefonts/merged_font.ttf -Destination "C:\Windows\Fonts\merged_font.ttf"
+          New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" `
+            -Name "${{ env.FONT_NAME }} (TrueType)" `
+            -Value "merged_font.ttf" `
+            -PropertyType String `
+            -Force
 
       - name: Convert TTF to BCFNT
+        shell: pwsh
         run: |
-          source /etc/profile.d/devkit-env.sh
-          mkbcfnt -o fonttool/SystemFont.bcfnt \
-            -s ${{ github.event.inputs.font_size }} \
-            mergefonts/merged_font.ttf
+          ./ctr_FontConverterConsole.exe -i win -in "${{ env.FONT_NAME }}" `
+            -is ${{ github.event.inputs.font_size }} `
+            -ic A4 `
+            -o bcfnt -of fonttool/SystemFont.bcfnt `
+            -f xllt/3ds_bitmap_font_std.xllt
 
       - name: Run FontTool
         shell: pwsh
