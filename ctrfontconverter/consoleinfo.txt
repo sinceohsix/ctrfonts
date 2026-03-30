@@ -1,7 +1,6 @@
 CTR Font Converter Console - Version 1.2.2
 Usage:
-  ctr_FontConverterConsole -i <in_fmt> <in_opt> -o <out_fmt> <out_opt> [-f <filt
-er>]
+  ctr_FontConverterConsole -i <in_fmt> <in_opt> -o <out_fmt> <out_opt> [-f <filter>]
 
  -i <in_fmt>              <in_fmt> is one of the following: image, bcfnt, win
  -o <out_fmt>             <out_fmt> is one of the following: image, bcfnt
@@ -49,8 +48,7 @@ The <out_opt> argument depends what is specified for <out_fmt>.
 
  -o When specifying the "bcfnt" option:
    -of <bcfnt>            bcfnt file
-   -oe <encoding=uincode>   Supported Character code: <encoding> is one of the f
-ollowing:
+   -oe <encoding=uincode>   Supported Character code: <encoding> is one of the following:
                           sjis, uincode, cp1252
    -op <glyphgroup>       Glyph group (.xggp) file
    -os <sheetsize>        Sheet size (in kilopixels)

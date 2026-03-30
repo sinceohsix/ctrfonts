@@ -1,52 +1,75 @@
-name: ctrfont
+name: ctrfont2
 
 on:
   workflow_dispatch:
+    inputs:
+      font_url:
+        description: 'URL to a TTF/OTF font file'
+        required: true
+      font_size:
+        description: 'Font size in points'
+        required: true
+        default: '20'
+      font_name:
+        description: 'Output name (e.g. PopHappiness)'
+        required: true
+
+defaults:
+  run:
+    shell: pwsh
 
 jobs:
-  setup:
+  build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up MSYS2
-        uses: msys2/setup-msys2@v2
+      - name: Download custom font
+        run: curl -L "${{ github.event.inputs.font_url }}" -o mergefonts/custom_font.ttf
+
+      - name: Merge custom font w/ nintendo_NTLG-DB_001.ttf
+        run: |
+          fontforge/bin/fontforge.exe mergefonts/merge-fonts.py \
+            mergefonts/custom_font.ttf \
+            mergefonts/nintendo_NTLG-DB_001.ttf \
+            mergefonts/merged_font.ttf
+            
+      - name: Get name of custom font
+        run: |
+          pip install fonttools --quiet
+          $fontName = python3 -c "from fontTools.ttLib import TTFont; tt = TTFont('mergefonts/merged_font.ttf'); print(tt['name'].getDebugName(1))"
+          echo "FONT_NAME=$fontName" >> $env:GITHUB_ENV
+          
+      - name: Install merged font to Windows
+        run: |
+          Copy-Item mergefonts/merged_font.ttf -Destination "C:\Windows\Fonts\merged_font.ttf"
+          New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" `
+            -Name "${{ env.FONT_NAME }} (TrueType)" `
+            -Value "merged_font.ttf" `
+            -PropertyType String `
+            -Force
+
+      - name: Run CTRFontConverter
+        run: |
+          $D = "${{ github.workspace }}"
+          & "$D\ctrfontconverter\ctr_FontConverterConsole.exe" -i win -in "${{ env.FONT_NAME }}" `
+            -is ${{ github.event.inputs.font_size }} `
+            -ic A4 `
+            -o bcfnt -of fonttool/SystemFont.bcfnt `
+            -f "$D\ctrfontconverter\xllt\3ds_bitmap_font_std.xllt"
+
+      - name: Run FontTool
+        run: |
+          cd fonttool
+          python3 FontTool.py -font SystemFont.bcfnt
+          exit 0
+
+      - name: Upload CIA artifact
+        uses: actions/upload-artifact@v4
         with:
-          msystem: MINGW64
-          update: true
-
-      - name: Add devkitPro pacman repository
-        shell: msys2 {0}
-        run: |
-          curl -LO https://downloads.devkitpro.org/devkitpro-keyring.pkg.tar.xz
-          pacman -U --noconfirm --nodeps --needed devkitpro-keyring.pkg.tar.xz || true
-          cat >> /etc/pacman.conf << 'EOF'
-
-          [dkp-libs]
-          SigLevel = Optional TrustAll
-          Server = https://downloads.devkitpro.org/packages
-
-          [dkp-windows]
-          SigLevel = Optional TrustAll
-          Server = https://downloads.devkitpro.org/packages/windows
-          EOF
-          pacman -Sy --noconfirm
-
-      - name: Install 3ds-dev
-        shell: msys2 {0}
-        run: pacman -S --noconfirm 3ds-dev
-
-      - name: Set devkitPro environment
-        shell: msys2 {0}
-        run: |
-          export PATH="$PATH:/opt/devkitpro/tools/bin"
-          export DEVKITPRO=/opt/devkitpro
-          export DEVKITARM=/opt/devkitpro/devkitARM
-
-      - name: Verify mkbcfnt
-        shell: msys2 {0}
-        run: |
-          export PATH="$PATH:/opt/devkitpro/tools/bin"
-          mkbcfnt --version || mkbcfnt --help
+          name: ${{ github.event.inputs.font_name }}Font
+          path: |
+            fonttool/SystemFont.cia
+            mergefonts/merged_font.ttf
