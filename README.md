@@ -11,7 +11,13 @@ Custom firmware (CFW) is required to install custom fonts. You can setup custom 
 >Custom fonts are safe as long as you have Boot9Strap and GodMode9 installed. Uninstalling CFW while having a custom font installed will brick your console. **It is highly recommended that you make a NAND backup before modifying system files**.
 
 ### Fonts
-There are currently **??** fonts available.
+There are currently **3** fonts available.
+
+| Preview | Font | Download |
+| :-----: | :--: | :------: |
+| <img src="/fonts/previews/MARIO-MAKER.png"> | MARIO MAKER | [Download](https://github.com/sinceohsix/ctrfont/releases/download/MARIO-MAKER/SystemFont.cia) |
+| <img src="/fonts/previews/Zelda-Glyphs-v2-Deco.png"> | Zelda Glyphs | [Download](https://github.com/sinceohsix/ctrfont/releases/download/Zelda-Glyphs-v2-Deco/SystemFont.cia) |
+
 
 #### Installing Custom Fonts
 
