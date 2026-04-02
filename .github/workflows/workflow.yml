@@ -78,10 +78,18 @@ jobs:
           python3 -c "
           from PIL import Image, ImageDraw, ImageFont
           import os
+
           img = Image.new('RGB', (200, 100), color='white')
           draw = ImageDraw.Draw(img)
           font = ImageFont.truetype('C:/Windows/Fonts/merged_font.ttf', 72)
-          draw.text((20, 10), 'Aa', font=font, fill='black')
+
+          bbox = draw.textbbox((0, 0), 'Aa', font=font)
+          w = bbox[2] - bbox[0]
+          h = bbox[3] - bbox[1]
+          x = (200 - w) // 2 - bbox[0]
+          y = (100 - h) // 2 - bbox[1]
+
+          draw.text((x, y), 'Aa', font=font, fill='black')
           os.makedirs('fonts/previews', exist_ok=True)
           img.save('fonts/previews/${{ env.FONT_NAME }}.png')
           "
