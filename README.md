@@ -72,7 +72,24 @@ Click or tap an image to see it in original quality.
 If you are curious about the custom HOME Menu layout in the screenshots above, you can download it from [here](https://aromakitsune.github.io/3DS-Custom-Home-Menu-UI). (Created by AromaKitsune)
 
 ## Converting Your Own Fonts
-By using GitHub Actions, you can convert any compatible font file to an installable `SystemFont.cia` in as little as ~50 seconds! The workflow is based on the guide written by AromaKitsune and uses the same tools and scripts. None of the tools used are made by me, you can find more info about them below.
+You can convert any compatible font file to an installable `SystemFont.cia` in as little as ~50 seconds. You have two ways of doing so, GitHub Actions or a Powershell script. GitHub Actions works on any device from a web browser but requires a GitHub account and a direct URL to a font. The Powershell script only requires a Windows machine and lets you convert any font you have (`.otf`, `.ttf`, or installed fonts). 
+
+Both methods are based on the guide written by AromaKitsune and use the same tools and scripts. None of the tools used are made by me, you can find more info about them below.
+
+>[!IMPORTANT]
+>Neither of these guides are done yet, they are just placeholders.
+
+### GitHub Actions
+1. Fork this repository.
+2. Go to actions
+3. Enable workflows
+4. Select 'ctrfont2' then run workflow
+5. Enter a font url and run workflow
+
+### Powershell
+1. Clone this repository and extract the .zip
+2. Run: `script.ps1 -FontFile [Path-to-otf/ttf file]`
+3. Wait patiently.
 
 ## Tools Used
 - [FontForge](https://fontforge.org/en-US/)
