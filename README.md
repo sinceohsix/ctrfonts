@@ -67,7 +67,9 @@ Click or tap an image to see it in original quality.
 
 |                       Splatoon                     |                The Legend of Zelda                 |                        Undertale                     |
 | :------------------------------------------------: | :------------------------------------------------: | :--------------------------------------------------: |
-| ![Preview](./fonts/screenshots/splat.jpg?raw=true) | ![Preview](./fonts/screenshots/zelda.jpg?raw=true) | ![Preview](./fonts/screenshots/undertale.jpg?raw=true)
+| ![Preview](./fonts/screenshots/splat.jpg?raw=true) | ![Preview](./fonts/screenshots/zelda.jpg?raw=true) | ![Preview](./fonts/screenshots/undertale.jpg?raw=true) |
+
+If you are curious about the custom HOME Menu layout in the screenshots above, you can download it from [here](https://aromakitsune.github.io/3DS-Custom-Home-Menu-UI). (Created by AromaKitsune)
 
 ## Converting Your Own Fonts
 By using GitHub Actions, you can convert any compatible font file to an installable `SystemFont.cia` in as little as ~50 seconds! The workflow is based on the guide written by AromaKitsune and uses the same tools and scripts. None of the tools used are made by me, you can find more info about them below.
