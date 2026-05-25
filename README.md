@@ -88,9 +88,16 @@ Both methods are based on the guide written by AromaKitsune and use the same too
 5. Enter a font url and run workflow
 
 ### Powershell
-1. Clone this repository and extract the .zip
-2. Run: `script.ps1 -FontFile [Path-to-otf/ttf file]`
-3. Wait patiently.
+>[!NOTE]
+>**Requirements:**  
+>1. [Python](https://www.python.org/downloads/) - Make sure it is added to your PATH.
+>2. [.NET Framework 3.5](https://www.microsoft.com/en-us/download/details.aspx?id=21) - If you don't have it you will be prompted to install it when running the script.
+
+1. [Download this repository](https://github.com/sinceohsix/ctrfonts/archive/refs/heads/main.zip) and extract it.
+2. Right-click the Start button then open "Terminal (Admin). It should open a Powershell tab.
+3. Navigate to the extracted folder with `cd [folderPath]`.
+3. Run: `./make-ctrfont.ps1 -FontFile [font.ttf/otf]`.
+4. Wait patiently.
 
 ## Tools Used
 - [FontForge](https://fontforge.org/en-US/)
